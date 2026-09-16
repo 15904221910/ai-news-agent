@@ -25,7 +25,7 @@
 
 ---
 
-## 🖼️ 产品预览
+## 📷 产品预览
 
 <p align="center">
   <img src="docs/images/briefs.png" width="58%" alt="简报页：历史列表 + Markdown 详情">
@@ -189,7 +189,7 @@ python -m pytest tests -q
 - **失败隔离**：单个渠道发送失败仅记 WARNING 日志，不影响其他渠道与本次运行状态；
 - **语法适配**：企微去代码块、钉钉标题降级、飞书转纯文本，超长内容按渠道字节上限自动分批。
 
-## ⚙️ 配置说明
+## 🔧 配置说明
 
 `.env` 完整模板见 [`.env.example`](.env.example)，关键配置：
 
@@ -214,7 +214,7 @@ python -m pytest tests -q
 | 邮件 | 任意邮箱 | 填写 `SMTP_*`（如 QQ 邮箱授权码） |
 | 通用 Webhook | 自定义服务 | 任何接受 JSON POST 的服务均可 |
 
-## 🖥️ Web 界面
+## 💻 Web 界面
 
 两个极简页面（[`client/`](client/)，原生 HTML / JS，FastAPI 静态托管）：
 
@@ -236,7 +236,7 @@ python -m pytest tests -q
 
 错误统一格式：`{"error": {"code", "message", "request_id"}}`。
 
-## 🏗️ 项目架构
+## 📐 项目架构
 
 ```
 client/                     静态前端（设置页 + 简报页 + app.js + style.css）
