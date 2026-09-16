@@ -240,7 +240,7 @@ python -m pytest tests -q
 
 ```
 client/                     静态前端（设置页 + 简报页 + app.js + style.css）
-scripts/                    seed.py（种子数据）、run_agent_cli.py（命令行直跑）
+scripts/                    seed.py（种子数据）、run_agent_cli.py（命令行直跑）、export_schema.py（建表 SQL 导出）
 server/
   main.py                   FastAPI 入口：lifespan（建表→清理悬挂→种子→调度器）+ 异常映射 + 静态挂载
   config.py                 环境变量 → Settings（frozen），启动校验 fail fast
@@ -256,7 +256,7 @@ server/
   users/ briefs/ runs/      Feature-first 服务层（models + schemas + service + router）
 tests/                      89 个用例：工具 / 沙箱 / 注册表 / 循环 / 上下文 / API / 推送 / 迁移
 workspace/briefs/           简报 Markdown 落盘目录（沙箱根）
-data/app.db                 SQLite 数据库
+data/app.db                 SQLite 数据库（应用表建表 SQL：scripts/schema.sql）
 .github/workflows/daily.yml 云端定时（每天 08:00 北京时间）
 ```
 
@@ -270,6 +270,15 @@ data/app.db                 SQLite 数据库
      → 按勾选的渠道逐一推送（单渠道失败仅记 WARNING 并隔离）→ run(success)
 失败 → run(failed) + 错误信息（可经 API 轨迹审计）→ 释放锁
 ```
+
+### 数据库与迁移
+
+| 项 | 说明 |
+| --- | --- |
+| 表结构 | 6 张表（users / preferences / briefs / agent_runs / tool_calls / context_windows），定义于 `server/*/models.py`（SQLAlchemy 2.0 声明式），设计说明见 [docs/PRD与系统设计.md](docs/PRD与系统设计.md) |
+| 建表 SQL | [scripts/schema.sql](scripts/schema.sql)（与运行期结构一致的参考导出）；模型变更后运行 `python scripts/export_schema.py` 重新生成 |
+| 自动建表 | 服务启动时 `init_db()` 执行 `create_all`，无需手工建表；APScheduler 作业表由其 JobStore 首次启动自动创建 |
+| 轻量迁移 | `server/database.py` 内置幂等迁移：旧单渠道（push_channel / webhook_url）→ 多选（push_channels / channel_urls），重命名-重建-搬数据，启动自动执行；3 个迁移单测见 [tests/test_migration.py](tests/test_migration.py) |
 
 ## 🧪 测试与验收
 
