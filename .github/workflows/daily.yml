@@ -1,0 +1,50 @@
+name: Daily Brief
+
+# 零成本定时部署：每天 08:00（北京时间）在云端生成 AI 新闻简报并推送，本机无需常开。
+# 配置：Settings → Secrets and variables → Actions
+#   Secrets: LLM_API_KEY（必填）、SEARCH_API_KEY、PUSH_CHANNELS（逗号分隔可多选）、PUSH_WEBHOOK_URL、SMTP_*
+on:
+  schedule:
+    - cron: "0 0 * * *" # UTC 00:00 = 北京时间 08:00
+  workflow_dispatch:
+    inputs:
+      keywords:
+        description: "临时补充关注关键词（逗号分隔，留空用订阅偏好默认值）"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate and push brief
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL || 'https://api.deepseek.com' }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'deepseek-flash' }}
+          SEARCH_API_KEY: ${{ secrets.SEARCH_API_KEY }}
+          HTTP_PROXY_URL: ${{ vars.HTTP_PROXY_URL }}
+          PUSH_CHANNELS: ${{ secrets.PUSH_CHANNELS || secrets.PUSH_CHANNEL }}
+          PUSH_WEBHOOK_URL: ${{ secrets.PUSH_WEBHOOK_URL }}
+          PUSH_EMAIL_TO: ${{ secrets.PUSH_EMAIL_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          EXTRA_KEYWORDS: ${{ inputs.keywords }}
+        run: python scripts/run_agent_cli.py

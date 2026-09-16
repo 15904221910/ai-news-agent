@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>订阅设置 · 每日 AI 新闻助手</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body data-page="settings">
+<header class="nav">
+  <div class="brand">每日 AI 新闻助手</div>
+  <nav>
+    <a href="/settings.html" class="active">订阅设置</a>
+    <a href="/">简报</a>
+  </nav>
+</header>
+
+<main class="layout single" style="max-width:760px">
+  <section class="panel form">
+    <h2 style="margin-top:0">我的信息</h2>
+    <label for="name">姓名</label>
+    <input type="text" id="name" placeholder="如何称呼你">
+
+    <label for="email">邮箱（推送渠道选 email 时必填）</label>
+    <input type="email" id="email" placeholder="you@example.com">
+
+    <h2>订阅偏好</h2>
+    <label>关注话题（可多选）</label>
+    <div id="topics" class="checkboxes"></div>
+
+    <label for="keywords">关注关键词（英文逗号分隔，最多 20 个）</label>
+    <input type="text" id="keywords" placeholder="GPT, 具身智能, 多模态">
+
+    <label for="exclude_keywords">排除关键词（优先级高于关注关键词）</label>
+    <input type="text" id="exclude_keywords" placeholder="融资, 股价">
+
+    <label for="push_time">每日推送时间</label>
+    <input type="time" id="push_time" value="08:00">
+    <div class="hint" id="hint"></div>
+
+    <label>推送渠道（可多选；不选则仅在网页查看）</label>
+    <div id="channelBox" class="channel-box"></div>
+    <div class="hint">建议至少选一个微信渠道（如 Server 酱，扫码即用）；勾选多个渠道时，简报会逐个推送，单个渠道失败不影响其他渠道。</div>
+
+    <div class="actions">
+      <button id="saveBtn">保存</button>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

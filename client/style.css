@@ -1,0 +1,119 @@
+/* 每日 AI 新闻助手 · 极简样式 */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --border: #e3e6ea;
+  --text: #1f2329;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --warn: #d97706;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.65 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+a { color: var(--primary); text-decoration: none; }
+
+/* 顶部导航 */
+.nav {
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 20px; height: 52px;
+  background: var(--panel); border-bottom: 1px solid var(--border);
+}
+.nav .brand { font-weight: 600; }
+.nav nav { display: flex; gap: 4px; }
+.nav nav a { padding: 6px 12px; border-radius: 6px; color: var(--muted); }
+.nav nav a.active { background: #eef2ff; color: var(--primary); font-weight: 600; }
+.nav nav a:hover { background: #f3f4f6; }
+
+/* 布局 */
+.layout { display: flex; gap: 16px; padding: 16px 20px; max-width: 1200px; margin: 0 auto; }
+.layout.single { display: block; }
+.sidebar { width: 320px; flex-shrink: 0; }
+.panel, .brief-detail {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 20px;
+}
+.panel { margin-bottom: 16px; }
+
+/* 按钮 */
+button {
+  font: inherit; cursor: pointer; border: none; border-radius: 8px;
+  padding: 8px 16px; background: var(--primary); color: #fff;
+}
+button:hover { filter: brightness(1.08); }
+button:disabled { opacity: .55; cursor: not-allowed; }
+button.secondary { background: #eef2ff; color: var(--primary); }
+
+/* 状态条 */
+.status-bar { margin-top: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px;
+  background: #eef2ff; color: var(--primary); }
+.status-bar.success { background: #ecfdf5; color: var(--success); }
+.status-bar.failed { background: #fef2f2; color: var(--danger); }
+.status-bar.hidden { display: none; }
+
+/* 简报页：右栏（状态条 + 今日工具条 + 详情） */
+.detail-pane { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.detail-pane .status-bar { margin-top: 0; }
+.list-title { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .5px; margin: 4px 0 2px; }
+.today-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 14px; border-radius: 10px; font-size: 13px;
+  background: var(--panel); border: 1px solid var(--border); color: var(--muted);
+}
+.today-bar.attention { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+.today-bar.hidden { display: none; }
+.today-bar button { padding: 6px 14px; font-size: 13px; flex-shrink: 0; }
+
+/* 简报列表 */
+.brief-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.brief-list li {
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  margin-bottom: 8px; cursor: pointer;
+}
+.brief-list li:hover { border-color: var(--primary); }
+.brief-list li.active { border-color: var(--primary); background: #eef2ff; }
+.brief-list .item-title { font-weight: 600; }
+.brief-list .item-date { color: var(--muted); font-size: 12px; }
+.pager { display: flex; justify-content: space-between; margin-top: 10px; }
+.pager button { padding: 4px 12px; font-size: 13px; }
+.placeholder { color: var(--muted); }
+
+/* 简报详情（Markdown 渲染） */
+.brief-detail h1 { font-size: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.brief-detail h2 { font-size: 16px; margin-top: 20px; }
+.brief-detail blockquote { margin: 8px 0; padding: 4px 12px; border-left: 3px solid var(--border); color: var(--muted); }
+
+/* 表单 */
+.form label { display: block; margin: 14px 0 4px; font-weight: 600; }
+.form input[type="text"], .form input[type="email"], .form input[type="time"], .form input[type="url"], .form select {
+  width: 100%; max-width: 420px; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: 8px; font: inherit; background: #fff;
+}
+.form .checkboxes { display: flex; flex-wrap: wrap; gap: 12px; }
+.form .checkboxes label { font-weight: 400; margin: 0; display: flex; align-items: center; gap: 6px; }
+.form .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.form .actions { margin-top: 20px; }
+
+/* 设置页：渠道多选（勾选后展开各自地址输入） */
+.channel-box { margin-top: 6px; }
+.channel-group .group-title { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .5px; margin: 10px 0 6px; }
+.channel-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; background: #fff; }
+.channel-item .channel-head { display: block; margin: 0; padding: 9px 12px; font-weight: 600; cursor: pointer; }
+.channel-item .channel-body { display: none; padding: 0 12px 10px; border-top: 1px dashed var(--border); }
+.channel-item .channel-body .url-label { font-size: 12px; font-weight: 600; color: var(--muted); margin: 8px 0 4px; }
+.channel-item .channel-url { max-width: 100%; }
+
+/* Toast */
+#toast { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+#toast .toast-item {
+  padding: 10px 16px; border-radius: 8px; color: #fff; background: #334155;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15); font-size: 13px;
+}
+#toast .toast-item.success { background: var(--success); }
+#toast .toast-item.error { background: var(--danger); }

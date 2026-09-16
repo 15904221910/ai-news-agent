@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 环境与密钥
+.env
+.venv/
+venv/
+
+# 运行期产物
+data/
+workspace/
+logs/
+*.db
+*.db-wal
+*.db-shm
+
+# IDE
+.idea/
+.vscode/
+
+# 本地验收截图
+verify-*.png
