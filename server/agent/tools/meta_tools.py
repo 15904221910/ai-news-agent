@@ -21,13 +21,17 @@ def get_user_profile(args: dict, ctx) -> dict:
             topics = json.loads(pref.topics) if pref and pref.topics else []
         except json.JSONDecodeError:
             topics = []
+        try:
+            channels = json.loads(pref.push_channels) if pref and pref.push_channels else []
+        except json.JSONDecodeError:
+            channels = []
         return {
             "name": user.name,
             "email": user.email,
             "topics": topics,
             "keywords": pref.keywords if pref else "",
             "exclude_keywords": pref.exclude_keywords if pref else "",
-            "push_channel": pref.push_channel if pref else "web",
+            "push_channels": channels,
         }
 
 

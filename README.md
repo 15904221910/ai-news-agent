@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+">
   <img src="https://img.shields.io/badge/FastAPI-0.110%2B-009688?logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/LLM-OpenAI%20Compatible-412991?logo=openai&logoColor=white" alt="OpenAI Compatible">
-  <img src="https://img.shields.io/badge/tests-89%20passed-2ea44f" alt="89 tests passed">
+  <img src="https://img.shields.io/badge/tests-92%20passed-2ea44f" alt="92 tests passed">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
 </p>
 
@@ -95,7 +95,7 @@ uvicorn server.main:app --reload --port 8000
 # 命令行直跑一次 Agent（不依赖 Web，方便调试）
 python scripts/run_agent_cli.py
 
-# 运行测试（89 个用例，零外网依赖）
+# 运行测试（92 个用例，零外网依赖）
 python -m pytest tests -q
 ```
 
@@ -254,7 +254,7 @@ server/
     prompts.py              系统提示词全文
     tools/                  12 个工具 + 注册表执行管线（校验 / 安全 / 超时 / 截断 / 错误包装）
   users/ briefs/ runs/      Feature-first 服务层（models + schemas + service + router）
-tests/                      89 个用例：工具 / 沙箱 / 注册表 / 循环 / 上下文 / API / 推送 / 迁移
+tests/                      92 个用例：元工具 / 沙箱 / 注册表 / 循环 / 上下文 / API / 推送 / 迁移
 workspace/briefs/           简报 Markdown 落盘目录（沙箱根）
 data/app.db                 SQLite 数据库（应用表建表 SQL：scripts/schema.sql）
 .github/workflows/daily.yml 云端定时（每天 08:00 北京时间）
@@ -283,10 +283,10 @@ data/app.db                 SQLite 数据库（应用表建表 SQL：scripts/sch
 ## 🧪 测试与验收
 
 ```bash
-python -m pytest tests -q   # 89 passed
+python -m pytest tests -q   # 92 passed
 ```
 
-覆盖范围：沙箱逃逸与白名单拦截、注册表管线（Schema 校验 / 未知工具 / 超时 / 截断 / 错误包装）、循环行为（正常终止 / 单步多工具 / 错误自愈 / 超步兜底 / 空回复重试 / 模型主动切窗 / 硬线强制切窗）、上下文管理器（油量表 / 笔记 / 归档 / 检索）、API 全链路（偏好 CRUD / 生成流程 / 409 防重 / 悬挂清理）、推送（渠道多选 / 失败隔离 / 语法适配）。
+覆盖范围：元工具与偏好字段一致性（含密钥不外泄）、沙箱逃逸与白名单拦截、注册表管线（Schema 校验 / 未知工具 / 超时 / 截断 / 错误包装）、循环行为（正常终止 / 单步多工具 / 错误自愈 / 超步兜底 / 空回复重试 / 模型主动切窗 / 硬线强制切窗）、上下文管理器（油量表 / 笔记 / 归档 / 检索）、API 全链路（偏好 CRUD / 生成流程 / 409 防重 / 悬挂清理）、推送（渠道多选 / 失败隔离 / 语法适配）。
 
 测试通过 `ScriptedLLM` 与假搜索工具实现**零外网依赖**，LLM 与 RSS 均不产生真实请求。
 
